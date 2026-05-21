@@ -99,7 +99,7 @@ def generate_content(theme, topic):
     請生成以下兩個部分：
 
     【題目】
-    一個吸引人的問題，讓觀眾想知道答案（一句話即可）
+    一個吸引人的問題，讓觀眾想知道答案（一句話以及四個選項即可）
 
     【逐字稿】
     一段約 1 到 2 分鐘的短片逐字稿（約 200 到 300 字），由真人對著鏡頭說話。
@@ -118,7 +118,7 @@ def generate_content(theme, topic):
     for attempt in range(max_retries):
         try:
             response = client.models.generate_content(
-                model='gemini-2.0-flash',
+                model='gemini-3-flash-preview',
                 contents=prompt
             )
             if not response.text:
@@ -136,7 +136,8 @@ def generate_content(theme, topic):
 def send_to_telegram(text):
     url = f"https://api.telegram.org/bot{TG_TOKEN}/sendMessage"
 
-    for chat_id in [TG_CHAT_ID, TZUYIN_CHAT_ID]:
+    # for chat_id in [TG_CHAT_ID, TZUYIN_CHAT_ID]:
+    for chat_id in [TG_CHAT_ID]:
         if not chat_id:
             continue
         payload = {
