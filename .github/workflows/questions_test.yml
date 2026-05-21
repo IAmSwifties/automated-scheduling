@@ -1,4 +1,4 @@
-name: Weekly Theme Content Generator
+name: Weekly Theme Content Generator Test
 
 on:
   schedule:
