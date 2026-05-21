@@ -34,7 +34,7 @@ jobs:
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
           TZUYIN_CHAT_ID: ${{ secrets.TZUYIN_CHAT_ID }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python questions.py
+        run: python questions_test.py
 
       - name: 更新已用主題紀錄
         run: |
