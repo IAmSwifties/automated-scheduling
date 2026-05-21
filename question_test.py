@@ -154,6 +154,7 @@ if __name__ == "__main__":
 
     used_data = load_used_topics()
 
+    send_to_telegram(f"測試中...")
     send_to_telegram(f"📅 {week} 主題內容已生成！")
     time.sleep(1)
 
