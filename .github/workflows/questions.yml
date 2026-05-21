@@ -35,3 +35,11 @@ jobs:
           TZUYIN_CHAT_ID: ${{ secrets.TZUYIN_CHAT_ID }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python questions.py
+
+      - name: 更新已用主題紀錄
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add used_topics.json
+          git diff --staged --quiet || git commit -m "更新已用主題紀錄"
+          git push
