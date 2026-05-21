@@ -1,0 +1,37 @@
+name: [Old] Weekly Theme Content Generator
+
+on:
+  schedule:
+    - cron: '0 1 * * 1'  # 台灣時間每週一 09:00
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 檢出程式碼
+        uses: actions/checkout@v4
+
+      - name: 設定 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 快取套件
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip
+
+      - name: 安裝套件
+        run: |
+          pip install google-genai requests
+
+      - name: 執行程式
+        env:
+          TG_TOKEN: ${{ secrets.TG_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+          TZUYIN_CHAT_ID: ${{ secrets.TZUYIN_CHAT_ID }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python questions.py
