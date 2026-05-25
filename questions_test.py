@@ -136,8 +136,8 @@ def generate_content(theme, topic):
 def send_to_telegram(text):
     url = f"https://api.telegram.org/bot{TG_TOKEN}/sendMessage"
 
-    # for chat_id in [TG_CHAT_ID, TZUYIN_CHAT_ID]:
-    for chat_id in [TG_CHAT_ID]:
+    for chat_id in [TG_CHAT_ID, TZUYIN_CHAT_ID]:
+    # for chat_id in [TG_CHAT_ID]:
         if not chat_id:
             continue
         payload = {
