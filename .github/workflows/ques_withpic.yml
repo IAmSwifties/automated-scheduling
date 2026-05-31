@@ -29,6 +29,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests Pillow google-genai openai
 
+      - name: 下載中文字型
+        run: |
+          wget -O /tmp/NotoSansTC.ttf "https://github.com/googlefonts/noto-cjk/raw/main/Sans/OTF/TraditionalChinese/NotoSansCJKtc-Regular.otf"
+
       - name: 執行程式
         env:
           TG_TOKEN: ${{ secrets.TG_TOKEN }}
