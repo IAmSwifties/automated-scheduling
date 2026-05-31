@@ -261,8 +261,8 @@ def send_image_to_telegram(image, caption):
     image.save(img_byte_arr, format='PNG')
     img_byte_arr.seek(0)
 
-    for chat_id in [TG_CHAT_ID]:
-    # for chat_id in [TG_CHAT_ID, TZUYIN_CHAT_ID]:
+    # for chat_id in [TG_CHAT_ID]:
+    for chat_id in [TG_CHAT_ID, TZUYIN_CHAT_ID]:
         if not chat_id:
             continue
         files = {"photo": ("card.png", img_byte_arr, "image/png")}
@@ -273,8 +273,8 @@ def send_image_to_telegram(image, caption):
 
 def send_text_to_telegram(text):
     url = f"https://api.telegram.org/bot{TG_TOKEN}/sendMessage"
-    for chat_id in [TG_CHAT_ID]:
-    # for chat_id in [TG_CHAT_ID, TZUYIN_CHAT_ID]:
+    # for chat_id in [TG_CHAT_ID]:
+    for chat_id in [TG_CHAT_ID, TZUYIN_CHAT_ID]:
         if not chat_id:
             continue
         payload = {"chat_id": chat_id, "text": text}
