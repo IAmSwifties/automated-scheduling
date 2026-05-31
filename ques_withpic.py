@@ -167,10 +167,9 @@ def generate_illustration(topic):
         print(f"  ⚠️ 插圖生成失敗：{e}")
         return None
 
-# ===== Pillow 合成圖卡 =====
 def create_image_card(question, options, theme_name, topic, illustration):
     card_width = 1080
-    card_height = 1150
+    card_height = 1350  # 字變大內容變多，高度拉高
     padding = 60
     bg_color = "#FFF8F0"
     header_color = "#FF8C69"
@@ -181,7 +180,6 @@ def create_image_card(question, options, theme_name, topic, illustration):
     card = Image.new("RGB", (card_width, card_height), bg_color)
     draw = ImageDraw.Draw(card)
 
-    # 自動找可用的中文字型路徑
     font_paths_bold = [
         "/tmp/NotoSansTC.ttf",
         "/usr/share/fonts/truetype/noto/NotoSansCJK-Bold.ttc",
@@ -205,27 +203,23 @@ def create_image_card(question, options, theme_name, topic, illustration):
         print("  ⚠️ 找不到中文字型，使用預設字型")
         return ImageFont.load_default()
 
-    font_title = find_font(font_paths_bold, 42)
-    font_question = find_font(font_paths_regular, 36)
-    font_option = find_font(font_paths_regular, 32)
-    font_tag = find_font(font_paths_bold, 28)
+    font_title = find_font(font_paths_bold, 52)    # 42 → 52
+    font_question = find_font(font_paths_regular, 46)  # 36 → 46
+    font_option = find_font(font_paths_regular, 42)    # 32 → 42
+    font_tag = find_font(font_paths_bold, 36)      # 28 → 36
 
-    # Header
-    draw.rectangle([(0, 0), (card_width, 120)], fill=header_color)
-    draw.text((padding, 35), f"{theme_name}｜{topic}", font=font_title, fill="#FFFFFF")
+    # Header（高度加高配合大字）
+    draw.rectangle([(0, 0), (card_width, 150)], fill=header_color)
+    draw.text((padding, 45), f"{theme_name}｜{topic}", font=font_title, fill="#FFFFFF")
 
     # 插圖
-    y_cursor = 130
+    y_cursor = 160
     if illustration:
         illus_size = 400
         illustration = illustration.resize((illus_size, illus_size))
         illus_x = (card_width - illus_size) // 2
         card.paste(illustration, (illus_x, y_cursor))
         y_cursor += illus_size + 30
-
-    # 題目標籤
-    # draw.text((padding, y_cursor), "Q", font=font_title, fill=header_color)
-    # y_cursor += 50
 
     # 自動換行題目
     max_width = card_width - padding * 2
@@ -244,22 +238,19 @@ def create_image_card(question, options, theme_name, topic, illustration):
 
     for line in lines:
         draw.text((padding, y_cursor), line, font=font_question, fill=text_color)
-        y_cursor += 48
+        y_cursor += 60  # 48 → 60 行距加大
 
-    y_cursor += 20
+    y_cursor += 24
 
-    # 選項
+    # 選項（方框加高配合大字）
     for option in options:
-        opt_height = 70
+        opt_height = 90  # 70 → 90
         draw.rounded_rectangle(
             [(padding, y_cursor), (card_width - padding, y_cursor + opt_height)],
             radius=16, fill=option_bg_color, outline=option_border_color, width=2
         )
-        draw.text((padding + 20, y_cursor + 18), option, font=font_option, fill=text_color)
-        y_cursor += opt_height + 16
-
-    # 底部標籤
-    draw.text((padding, card_height - 60), "#健康知識 #每日一題", font=font_tag, fill=header_color)
+        draw.text((padding + 20, y_cursor + 22), option, font=font_option, fill=text_color)
+        y_cursor += opt_height + 20  # 間距也加大
 
     return card
 
