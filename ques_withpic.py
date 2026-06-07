@@ -121,8 +121,8 @@ def generate_content(theme, topic):
         except Exception as e:
             print(f"第 {attempt + 1} 次嘗試失敗：{e}")
             if attempt < max_retries - 1:
-                print("等待 10 秒後重試...")
-                time.sleep(10)
+                print("等待 30 秒後重試...")
+                time.sleep(30)
             else:
                 return None
 
@@ -318,7 +318,7 @@ if __name__ == "__main__":
         )
         send_text_to_telegram(message)
         print(f"✅ {theme['name']} 已送出！")
-        time.sleep(2)
+        time.sleep(60)
 
     save_all_topics(used_data)
     print("\n所有內容生成完畢！")
